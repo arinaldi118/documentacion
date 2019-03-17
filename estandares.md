@@ -1,7 +1,5 @@
 # Estandáres y buenas practicas
 
-## Indice
-
    - [1- Objetivo](#1--objetivo)
    - [2- Estructura de APP](#2--estructura-de-app)
      - [2.1- Controllers](#21--controllers) 
@@ -18,9 +16,10 @@
      - [3.4- Base de datos](#34--base-de-datos)
      - [3.5- Resto del código](#35--resto-del-código)
    - [4- Condicionales](#4--condicionales)
-     - [4.1 - IFs](#41---ifs)
-     - [4.2 - Operador Ternario](#42---operador-ternario)
-     - [4.3 - Operador OR](#43---operador-or)
+     - [4.1- IFs](#41--ifs)
+     - [4.2- Operador Ternario](#42--operador-ternario)
+     - [4.3- Operador AND](#43--operador-and)
+     - [4.4- Operador OR](#44--operador-or)
    - [5- Rest API](#5--rest-api)
      - [5.1- Mejores Prácticas](#51--mejores-prácticas)
      - [5.2- Status Code ERRORs](#52--status-code-errors)
@@ -29,9 +28,14 @@
      - [6.2- Reduce](#62--reduce)
      - [6.3- Filter](#63--filter)
      - [6.4- Otros](#64--otros)
-   - [7- Promise vs Async/Await](#7--promise-vs-asyncawait)
-     - [7.1- Promise](#71--promise)
-     - [7.2- Async/Await](#72--async/await)
+   - [7- Estilo de código](#7--estilo-de-código)
+     - [7.1- Límite del largo de las lineas](#71--límite-del-largo-de-las-lineas)
+     - [7.2- Requires](#7.2--requires)
+     - [7.3- Destructuring](#7.3--destructuring)
+     - [7.4- Return implícito](#74--return-implícito)
+   - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
+     - [8.1- Promise](#81--promise)
+     - [8.2- Async/Await](#82--async/await)
 
 ## 1- Objetivo
 
@@ -130,17 +134,27 @@ a esto:
     ....
     ..
 ```
-### 4.2 - Operador Ternario
+### 4.2- Operador Ternario
 
 Cuando debemos asignar a una variable un determinado valor en base a una condición podemos utilizar el operador ternario de esta manera:
 
 ```javascript
    let variable = opcion_1 || opcion_2 || opcion_3;
     
-    /* Variable tomara el valor de opcion_1 al menos que sea null o undefined, en ese caso tomara el valor de opcion_2, pero si este tambien es null o undefined tomara el valor de opcion_3 independientemente de su valor.*/
+   /* Variable tomara el valor de opcion_1 al menos que sea null o undefined, en ese caso tomara el valor de opcion_2, pero si este tambien es null o undefined tomara el valor de opcion_3 independientemente de su valor.*/
 ```
 
-### 4.3 - Operador OR
+### 4.3- Operador AND
+
+Una manera de evitarnos la utilización del operador ternario es con el uso del operador **AND**.
+
+```javascript
+   let variable = indicator && value;
+
+   /* Variable tomara el valor de value si indicator es verdadero. Si el valor de indicator es 0, false, Nan, null, undefined entonces variable tendra el valor de indicator.*/
+```
+
+### 4.4- Operador OR
 
 Cuando debemos asignar a una variable un valor entre distintas posibilidades dependiendo de si son o no _null_ o _undefined_ podemos usar el operador **OR**. Por ejemplo:
 
@@ -223,9 +237,54 @@ Otros métodos importantes son:
 * **forEach()**.
 * **split()**.
 
-## 7- Promise vs Async/Await
+## 7- Estilo de código
 
-### 7.1 - Promise
+### 7.1- Límite del largo de las lineas
+
+El limite del largo de las lineas será entre 80 y 100 caracteres.
+
+### 7.2- Requires
+
+El formato que utilizaremos para los **requires** será:
+* **const** para cada require.
+* Estarán separados en dos bloques:
+  * El primero contará con los requires correspondientes a dependencias externas.
+  * El segundo contará con los requires correspondientes a dependencias internas.
+
+```javascript
+   const moment = require('moment');
+   const lodash = require('lodash');
+
+   const userService = require('../services/users');
+   const userMapper = require('../mappers/users');
+
+   // Otro bloque con las demas constantes.
+
+```
+
+### 7.3- Destructuring
+
+La sintaxis de desestructuración es una expresión de JavaScript que hace posible desempaquetar valores de arrays, o propiedades de objetos, en variables distintas.
+
+Tambien podemos aprovechar esto para traernos constantes o funciones especificas en un require.
+
+```javascript
+   const { create, update, delete } = require('../services/user');
+```
+
+Una buena guia de destructuring se encuentra [aqui][destructuring].
+
+### 7.4- Return implícito
+
+Al utilizar _arrow functions_ tenemos la posibilidad de utilizar **returns implícitos** esto significa que no es necesario encerrar la función entre **{ }** y colocar el correspondiente **return**.
+
+Si bien esto nos hace tener un código un poco mas corto, si necesitamos hacer cambios podemos cometer errores los cuales nos consumirá tiempo al debuguear el código.
+
+Por lo tanto, solo se utlizará el **return implícito** en funciones sencillas.
+
+## 8- Promise vs Async/Await
+
+### 8.1- Promise
 
 La _promise_ representa la finalización (o falla) eventual de una operación asíncrona y su valor resultante. Consta de dos métodos:
 * **then**: Este método es ejecutado si la promesa fue resuelta.
@@ -233,7 +292,7 @@ La _promise_ representa la finalización (o falla) eventual de una operación as
 
 Existen diversas formas de utilizar las promises, una buena guía se encuentra en el siguiente post de Maykol Purica: [Guia Promises][MaPuP].
 
-### 7.2 - Async/Await
+### 8.2- Async/Await
 
 Es una _syntactic sugar_ de las promises.
 Agregar **async** delante de una función hace que esta devuelva siempre una promise.
@@ -244,3 +303,4 @@ Agregar **async** delante de una función hace que esta devuelva siempre una pro
    [MaPiP]: <https://medium.com/wolox-driving-innovation/developing-better-node-js-developers-a176de770539> 
    [GEP]: <https://medium.com/wolox-driving-innovation/nodejs-api-bootstrap-b598a2591a3b>
    [MaPuP]: <https://medium.com/wolox-driving-innovation/how-to-code-better-async-javascript-e59363883c84>
+   [destructuring]: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment>
