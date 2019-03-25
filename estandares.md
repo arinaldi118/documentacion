@@ -36,15 +36,18 @@
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
+   - [9- Links Utiles](#9--links-utiles)
 
 ## 1- Objetivo
 
 El objetivo del presente documento es presentar los estandares que usamos en Wolox para trabajar con NodeJS.
-Se recomienda leer el post de Matias Pizzagalli [Developing Better Node.js Developers][MaPiP]
+Se recomienda leer el post de Matias Pizzagalli cuyo link se encuentra en la sección de links útiles.
+
+&nbsp;
 
 ## 2- Estructura de APP
 
-La estructura que se usará incluyen, como mínimo, estas carpetas: (models e interactors si son necesarias para la API). Para mayor información se encuentra el post de Gonzalo Escandarani: [Bootstrap][GEP].
+La estructura que se usará incluyen, como mínimo, estas carpetas: (models e interactors si son necesarias para la API). Para mayor información se encuentra el post de Gonzalo Escandarani en la sección de links útiles.
 
 ### 2.1- Controllers
 
@@ -57,14 +60,15 @@ Interactúa con servicios externos o con la base de datos. Debe ser lo más simp
 ### 2.3- Models
 
 Aquí se encuentra el esquema del modelo, junto a sus asociaciones.
+Este debe ser lo más simple posible, solo los campos y las configuraciones del ORM utilizado. Intentamos no incluir la lógica aquí, pero está permitido realizar una validación de modelo específica como requisitos de contraseña para un usuario.
 
 ### 2.4- Helpers
 
-Herramientas técnicas como parsers, formatos de fechas, etc. No debe haber nada con respecto al negocio, son solo funciones que nos simplifican la vida.
+Herramientas técnicas como parsers, formatos de fechas, etc. No debe haber nada con respecto al negocio, son solo funciones que nos simplifican la vida y que podemos llegar a usar en otros proyectos.
 
 ### 2.5- Serializers
 
-Formatea la response de un service o de un endpoint.
+Formatea la response de un service o de un endpoint. Se utilizan cuando hay demasiada complejidad o repetición.
 
 ### 2.6- Interactors
 
@@ -73,6 +77,8 @@ Utilizado cuando el flujo del negocio es muy complejo o existen diferentes flujo
 ### 2.7- Middlewares
 
 Capas de abstracción, puesta antes de los controllers generalmente, que nos permiten realizar validaciones de distintos tipos, por ejemplo, validaciones de autenticación o validaciones de esquemas.
+
+&nbsp;
 
 ## 3- Convención de nombres
 
@@ -96,6 +102,8 @@ El nombre de las tablas y de las columnas serán en **snake_case**.
 ### 3.5- Resto del código
 
 Para el resto de código se usará **camelCase**.
+
+&nbsp;
 
 ## 4- Condicionales
 
@@ -164,6 +172,8 @@ Cuando debemos asignar a una variable un valor entre distintas posibilidades dep
    /* Variable tomara el valor de opcion_1 al menos que sea null o undefined, en ese caso tomara el valor de opcion_2, pero si este tambien es null o undefined tomara el valor de opcion_3 independientemente de su valor.*/
 ```
 
+&nbsp;
+
 ## 5- Rest API
 
 Normalmente usamos un diseño RESTful para nuestras APIs. El concepto de REST es separar la estructura de la API en recursos lógicos. Se utilizan los métodos HTTP **GET**, **DELETE**, **POST** y **PUT** para operar con los recursos.
@@ -180,6 +190,23 @@ Para realizar una buena API debemos respetar las siguientes practicas:
 
 
 ### 5.2- Status Code ERRORs
+
+Existen diversos _status codes_ para describir la respuesta de nuestras requests. \
+A continuación dejaremos un listado de los mas usados:
+
+* **200 OK**: Respuesta estandar para una request exitosa. Depende del método HTTP que se utiliza. 
+* **201 CREATED**: La request fue exitosa, se creó un nuevo recurso. Usado generalmente en POST y algunas veces con PUT.
+* **204 NO CONTENT**: La request fue exitosa pero no se envio contenido en la respuesta.
+* **400 BAD REQUEST**: Esta respuesta significa que el servidor no pudo entender la solicitud debido a una sintaxis no válida.
+* **401 UNAUTHORIZED**: La request falló debido a que no esta autenticado para realizar esa acción.
+* **403 FORBIDDEN**: La request falló debido a que no esta autorizado para realizar esa acción.
+* **404 NOT FOUND**: El servidor no puede encontrar el recurso solicitado.
+* **422 UNPROCESSABLE ENTITY**: Debe usarse si el servidor no puede procesar la request, por ejemplo, si una imagen no puede ser formateada o faltan campos obligatorios (body, query, params) en la request.
+* **500 INTERNAL SERVER ERROR**: El servidor ha encontrado una situación que no sabe cómo manejar.
+
+En la sección de links útiles se encontrará mas información respecto a los status codes.
+
+&nbsp;
 
 ## 6- Funcional
 
@@ -237,6 +264,8 @@ Otros métodos importantes son:
 * **forEach()**.
 * **split()**.
 
+&nbsp;
+
 ## 7- Estilo de código
 
 ### 7.1- Límite del largo de las lineas
@@ -272,7 +301,7 @@ Tambien podemos aprovechar esto para traernos constantes o funciones especificas
    const { create, update, delete } = require('../services/user');
 ```
 
-Una buena guia de destructuring se encuentra [aqui][destructuring].
+En la sección de links útiles se encuentra una buena guia de destructuring.
 
 ### 7.4- Return implícito
 
@@ -282,6 +311,8 @@ Si bien esto nos hace tener un código un poco mas corto, si necesitamos hacer c
 
 Por lo tanto, solo se utlizará el **return implícito** en funciones sencillas.
 
+&nbsp;
+
 ## 8- Promise vs Async/Await
 
 ### 8.1- Promise
@@ -290,7 +321,7 @@ La _promise_ representa la finalización (o falla) eventual de una operación as
 * **then**: Este método es ejecutado si la promesa fue resuelta.
 * **catch**: Este método es ejecutado si la promesa fue rechazada.
 
-Existen diversas formas de utilizar las promises, una buena guía se encuentra en el siguiente post de Maykol Purica: [Guia Promises][MaPuP].
+Existen diversas formas de utilizar las promises, una buena guía se encuentra en el siguiente post de Maykol Purica, ver sección de links útiles.
 
 ### 8.2- Async/Await
 
@@ -298,9 +329,18 @@ Es una _syntactic sugar_ de las promises.
 Agregar **async** delante de una función hace que esta devuelva siempre una promise.
 **await** solamente puede ser usado dentro de una **async function**, esta espera hasta que la promise sea resuelta para continuar con la ejecución del codigo. Se la suele usar dentro de un bloque **try/catch**.
 
+## 9- Links Utiles
+
+- [Developing Better Node.js Developers][MaPiP] Post de Matias Pizzagalli.
+- [Bootstrap][GEP] Post de Gonzalo Escandarani.
+- [Promises][MaPuP] Post de Maykol Purica.
+- [Destructuring][destructuring] Guia sobre destructuring.
+- [Status Codes][statusCodes] Guia de status codes.
+
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
    [MaPiP]: <https://medium.com/wolox-driving-innovation/developing-better-node-js-developers-a176de770539> 
    [GEP]: <https://medium.com/wolox-driving-innovation/nodejs-api-bootstrap-b598a2591a3b>
    [MaPuP]: <https://medium.com/wolox-driving-innovation/how-to-code-better-async-javascript-e59363883c84>
    [destructuring]: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment>
+   [statusCodes]: <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status>
