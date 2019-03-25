@@ -64,7 +64,7 @@ Este debe ser lo más simple posible, solo los campos y las configuraciones del 
 
 ### 2.4- Helpers
 
-Herramientas técnicas como parsers, formatos de fechas, etc. No debe haber nada con respecto al negocio, son solo funciones que nos simplifican la vida y que podemos llegar a usar en otros proyectos.
+Herramientas técnicas como parsers, formatos de fechas, etc. **No debe haber nada con respecto al negocio**, son solo funciones que nos simplifican la vida y que podemos llegar a usar en otros proyectos.
 
 ### 2.5- Serializers
 
@@ -72,7 +72,7 @@ Formatea la response de un service o de un endpoint. Se utilizan cuando hay dema
 
 ### 2.6- Interactors
 
-Utilizado cuando el flujo del negocio es muy complejo o existen diferentes flujos. Para estos casos crearemos un interactor y movemos las distintas interacciones del controller hacia este interactor.
+Utilizado cuando el flujo del negocio es muy complejo o existen diferentes flujos. Con _muy complejos_ hacemos referencia a casos en el que se hacen llamadas a varios _servicies_ o hayan muchos calculos en el medio. Para estos casos crearemos un interactor y movemos las distintas interacciones del controller hacia este interactor.
 
 ### 2.7- Middlewares
 
@@ -147,9 +147,7 @@ a esto:
 Cuando debemos asignar a una variable un determinado valor en base a una condición podemos utilizar el operador ternario de esta manera:
 
 ```javascript
-   let variable = opcion_1 || opcion_2 || opcion_3;
-    
-   /* Variable tomara el valor de opcion_1 al menos que sea null o undefined, en ese caso tomara el valor de opcion_2, pero si este tambien es null o undefined tomara el valor de opcion_3 independientemente de su valor.*/
+   let variable = condicion ? valor_si_condicion_es_verdadera : valor_si_condicion_es_falsa;
 ```
 
 ### 4.3- Operador AND
