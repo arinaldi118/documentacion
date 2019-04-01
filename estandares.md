@@ -24,10 +24,11 @@
      - [5.1- Mejores Prácticas](#51--mejores-prácticas)
      - [5.2- Status Code ERRORs](#52--status-code-errors)
    - [6- Funcional](#6--funcional)
-     - [6.1- Map](#61--map)
-     - [6.2- Reduce](#62--reduce)
-     - [6.3- Filter](#63--filter)
-     - [6.4- Otros](#64--otros)
+     - [6.1- Introducción](#61--introducción)
+     - [6.2- Map](#62--map)
+     - [6.3- Reduce](#63--reduce)
+     - [6.4- Filter](#64--filter)
+     - [6.5- Otros](#65--otros)
    - [7- Estilo de código](#7--estilo-de-código)
      - [7.1- Límite del largo de las lineas](#71--límite-del-largo-de-las-lineas)
      - [7.2- Requires](#7.2--requires)
@@ -210,7 +211,13 @@ En la sección de links útiles se encontrará mas información respecto a los s
 
 En la medida que se pueda, debemos utilizar funcionalidades provenientes del paradigma funcional como **Map, Reduce, Filter, etc.**
 
-### 6.1- Map
+### 6.1- Introducción
+
+La programación funcional es un paradigma _declarativo_ mientras la programación por procedimientos y OOP (programación orientada a objetos) son paradigmas _imperativos_.
+
+En el paradigma _declarativo_, a diferencia del _imperativo_, expresamos nuestra lógica sin describir el **control de flujo** (bucles, condicionales, etc.), enfocándonos en **qué** estamos haciendo, en vez de **cómo** se está haciendo, que sería el enfoque _imperativo_.
+
+### 6.2- Map
 
 Devuelve un nuevo array con el resultado de aplicar una función a cada elemento de un array.
 
@@ -224,7 +231,7 @@ Devuelve un nuevo array con el resultado de aplicar una función a cada elemento
    // expected output: Array [2, 8, 18, 32]
 ```
 
-### 6.2- Reduce
+### 6.3- Reduce
 
 Ejecuta una función reductora en cada elemento del array que resulta en un solo valor de salida.
 El valor devuelto por la función reductora se asigna al acumulador, cuyo valor es recordado durante la iteración del array y, en última instancia, se convierte en el valor final.
@@ -242,7 +249,7 @@ El valor devuelto por la función reductora se asigna al acumulador, cuyo valor 
    // expected output: 15
 ```
 
-### 6.3- Filter
+### 6.4- Filter
 
 Aplica una función a cada elemento del array, crea y devuelve un nuevo array con los elementos que cumplen con la condición impuesta.
 
@@ -253,7 +260,7 @@ Aplica una función a cada elemento del array, crea y devuelve un nuevo array co
    // filtered is [12, 130, 44]
 ```
 
-### 6.4- Otros
+### 6.5- Otros
 
 Otros métodos importantes son:
 
