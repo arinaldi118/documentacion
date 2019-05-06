@@ -11,10 +11,10 @@
      - [2.7- Middlewares](#27--middlewares)
    - [3- Naming Convention](#3--naming-convention)
      - [3.1- File name](#31--file-name)
-     - [3.2- Parámetros de entrada y salida de API (Pendiente)](#32--parámetros-de-entrada-y-salida-de-api-pendiente)
-     - [3.3- Rutas (Pendiente)](#33--rutas-pendiente)
-     - [3.4- Base de datos](#34--base-de-datos)
-     - [3.5- Resto del código](#35--resto-del-código)
+     - [3.2- Input and output API parameters (Pending)](#32--parámetros-de-entrada-y-salida-de-api-pendiente)
+     - [3.3- Routes (Pendiente)](#33--rutas-pendiente)
+     - [3.4- Database](#34--base-de-datos)
+     - [3.5- Code](#35--resto-del-código)
    - [4- Conditionals](#4--conditionals)
      - [4.1- IFs](#41--ifs)
      - [4.2- Ternary Operator](#42--ternary-operator)
@@ -183,7 +183,7 @@ These are some of the best practices to design a clean RESTful API:
 
 * **Use plural nouns instead of verbs**: To get all cars perform a GET to _/users_ instead of _getUsers_.
 * **GET methods must not alter states**: Must return stuff, not modify it.
-* **Use sub-resources for relations**: To obtain driver 2 of car number 4 use GET _/cars/4/drivers/2_
+* **Use sub-resources for relations**: To obtain driver number 2 of car number 4 use GET _/cars/4/drivers/2_
 * **Provide filtering, sorting, field selection and paging for collections**: Use query params to apply different options to alter data retrieval through GET methods.
 * **API Version**: API's must be versioned always.
 
