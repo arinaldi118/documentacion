@@ -81,6 +81,164 @@ Capas de abstracción, puesta antes de los controllers generalmente, que nos per
 &nbsp;
 
 
+## 5- Rest API
+
+Typically we use a RESTful design for our web APIs. The concept of REST is to separate the API structure into logical resources. There are used the HTTP methods **GET**, **DELETE**, **POST** and **PUT** to operate with the resources.
+
+### 5.1- Best Practices
+
+These are some of the best practices to design a clean RESTful API:
+
+* **Use plural nouns instead of verbs**: To get all cars perform a GET to _/users_ instead of _getUsers_.
+* **GET methods must not alter states**: Must return stuff, not modify it.
+* **Use sub-resources for relations**: To obtain driver 2 of car number 4 use GET _/cars/4/drivers/2_
+* **Provide filtering, sorting, field selection and paging for collections**: Use query params to apply different options to alter data retrieval through GET methods.
+* **API Version**: API's must be versioned always.
+
+### 5.2- Response Status Codes
+
+There are many _status codes_ to use in request responses. \
+Most commonly used are:
+
+* **200 OK**: Base successful response. Depends on currently used HTTP method. 
+* **201 CREATED**: Successful response meaning a new resource has been created. Most commonly used with POST and sometimes PUT.
+* **204 NO CONTENT**: Successful response without content in body.
+* **400 BAD REQUEST**: Request was not formatted correctly and the server cannot interpret it.
+* **401 UNAUTHORIZED**: Unauthorized attempt to use a specific resource.
+* **403 FORBIDDEN**: Incorrect level of authorization to use a specific resource.
+* **404 NOT FOUND**: Specified resource was not found.
+* **422 UNPROCESSABLE ENTITY**: Must be used when the server cannot handle the request as is. For example may be a parameter image cannot be read correctly or some parameters are missing.
+* **500 INTERNAL SERVER ERROR**: An internal server error has ocurred which it does not know how to handle.
+
+Useful links will include more information about status codes.
+
+## 6- Functional
+
+To the extent to which it can be applied, use fuctional primitives as **Map, Reduce, Filter, etc.**.
+
+### 6.1- Introduction
+
+Functional programming is a _declarative_ paradigm, whilst prodedural and OOP (object oriented programming) are _imperative_ paradigms.
+
+The _declarative_ paradigm, as opposed to _imperative_, avoids describing the **control flow** (loops, conditionals, etc.) and focuses on describing **what** are we doing instead of **how** are we doing it (_imperative_ approach).
+
+### 6.2- Map
+
+Returns a new array resulting of applying the a function to each element of the original array.
+
+```javascript
+   const numbers = [1, 4, 9, 16];
+
+   // pass a function to map
+   const double = numbers.map(x => x * 2);
+   
+   console.log(double);
+   // expected output: Array [2, 8, 18, 32]
+```
+
+### 6.3- Reduce
+
+Effectively reduces the array to one value, iterating through each element where acumulator is the result of the last call.
+The starting value of the acumulator is passed a second parameter and the last value returned is effectively the result of the reduce operation.
+
+```javascript
+   const numbers = [1, 2, 3, 4];
+   const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+   // 1 + 2 + 3 + 4
+   console.log(numbers.reduce(reducer));
+   // expected output: 10
+
+   // 5 + 1 + 2 + 3 + 4
+   console.log(numbers.reduce(reducer, 5));
+   // expected output: 15
+```
+
+### 6.4- Filter
+
+Returns an array with all the values from the original array for which the function retured a truthy value.
+
+```javascript
+   const isBigEnough = value => value >= 10;
+    
+   const filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
+   // filtered is [12, 130, 44]
+```
+
+### 6.5- Others
+
+Other useful methods for a _declarative_ approach.
+
+* **some()**.
+* **every()**.
+* **forEach()**.
+* **split()**.
+
+&nbsp;
+
+## 7- Estilo de código
+
+### 7.1- Límite del largo de las lineas
+
+El limite del largo de las lineas será entre 80 y 100 caracteres.
+
+### 7.2- Requires
+
+El formato que utilizaremos para los **requires** será:
+* **const** para cada require.
+* Estarán separados en dos bloques:
+  * El primero contará con los requires correspondientes a dependencias externas.
+  * El segundo contará con los requires correspondientes a dependencias internas.
+
+```javascript
+   const moment = require('moment');
+   const lodash = require('lodash');
+
+   const userService = require('../services/users');
+   const userMapper = require('../mappers/users');
+
+   // Otro bloque con las demas constantes.
+
+```
+
+### 7.3- Destructuring
+
+The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
+
+This is really useful to refer specific values from modules.
+
+```javascript
+   const { create, update, delete } = require('../services/user');
+```
+
+A comprenhensive approach to destructuring may be found in the useful links section.
+
+### 7.4- Implicit return
+
+When using _arrow functions_ we can make the **return statement implicit** meaning that the result of evaluating the expression right of the arrow will be returned as a value. This saves writing **{}** and **return**.  
+
+Yes, code will be shorter and neater but for more complex code, changing or debugging is noticeably more prone to errors. This is why, we enforce the use of the **implicit return** only in simple or short functions.
+
+&nbsp;
+
+## 8- Promise vs Async/Await
+
+### 8.1- Promise
+
+A _promise_ represents the eventual success or failure of an asynchronous operation. Promises have two methods:
+* **then**: Takes a function as parameter which is executed once the promise is resolved with the result as parameter.
+* **catch**: Takes a function as parameter which is executed once an exception is thrown with the exception as parameter.
+
+There are many ways to handle correctly promises. Feel free to browse Maykol Purica's post about Promises in the useful links section.
+
+### 8.2- Async/Await
+
+Promise's _syntactic sugar_.
+Specifying any function or arrow function as **async** specifies that the return value is a Promise.
+**await** may only be used inside **async** functions. Using **await** makes the code flow block until the promise is _resolved_ or _rejected_.
+**await** statements are usually within **try/catch** blocks.
+
+
 ## 9- Useful Links
 
 - [Developing Better Node.js Developers][MaPiP] Post by Matias Pizzagalli's post.
