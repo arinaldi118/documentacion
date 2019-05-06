@@ -64,19 +64,111 @@ The model should be as simple as possible, just fields and Sequelize configurati
 
 ### 2.4- Helpers
 
-Herramientas técnicas como parsers, formatos de fechas, etc. **No debe haber nada con respecto al negocio**, son solo funciones que nos simplifican la vida y que podemos llegar a usar en otros proyectos.
+Helpful tools with **absolutley no business logic whatsoever**. These include parsers, date formatters, etc. These are just helpers and should be able to be used in other projects.
 
 ### 2.5- Serializers
 
-Formatea la response de un service o de un endpoint. Se utilizan cuando hay demasiada complejidad o repetición.
+Formats the response of a service or endpoint. These are used when there is too much complexity or repetition.
 
 ### 2.6- Interactors
 
-Utilizado cuando el flujo del negocio es muy complejo o existen diferentes flujos. Con _muy complejos_ hacemos referencia a casos en el que se hacen llamadas a varios _servicies_ o hayan muchos calculos en el medio. Para estos casos crearemos un interactor y movemos las distintas interacciones del controller hacia este interactor.
+Utilized when business flow is too complex or are many of them. For _complex_ business flows we mean those which utilize many _services_ or perform various calculations. For these cases we create **interactors** and move the different interactions from the controller to it.
 
 ### 2.7- Middlewares
 
-Capas de abstracción, puesta antes de los controllers generalmente, que nos permiten realizar validaciones de distintos tipos, por ejemplo, validaciones de autenticación o validaciones de esquemas.
+Abstraction layers set up before controllers usually, which allow us to perform certain validation steps, for example, authentication or schema validations.
+
+&nbsp;
+
+&nbsp;
+
+## 3- Naming Conventions
+
+### 3.1- Files
+
+File names must be **snake_case**, the entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. 
+Same thing goes to controllers, services, etc.
+
+### 3.2- Input and output API parameters (Pending)
+
+Input and output API parameters will be in **snake_case**.
+
+### 3.3- Routes (Pendiente)
+
+Routes will be **snake_case**.
+
+### 3.4- Database
+
+Tables and columns should all be **snake_case**.
+
+### 3.5- Code
+
+Code should be **camelCase**.
+
+&nbsp;
+
+## 4- Conditional Statements
+
+### 4.1 - IFs
+
+Up to the possible extent, single statement ifs should be placed within the same line without using **{ }**.
+
+```javascript
+   if(!user) return next(errors.notFound('User not found');
+```
+
+Likewise, the if statement should be wisley selected to avoid using the else statement, for example use early return instead of else statement:
+
+```javascript
+   if(!user) return next(errors.notFound('User not found');
+    ..
+    ..
+    ....
+    .
+    ....
+    ..
+```
+instead of
+
+```javascript
+    if(user){
+        ..
+        ..
+        ....
+        .
+        ....
+        ..
+    } else {
+        next(errors.notFound('User not found');
+    };
+```
+### 4.2- Ternary Operators
+
+Cuando debemos asignar a una variable un determinado valor en base a una condición podemos utilizar el operador ternario de esta manera:
+
+```javascript
+   let variable = condition ? value_if_condition_is_true : value_if_condition_is_false;
+```
+
+### 4.3- AND Operator
+
+A simple way to avoid the ternary operator is using the **AND** operator. 
+
+In the following example variable will be set to value if indicator is truthy, if indicator is falsy variable will be set to value;
+
+```javascript
+   let variable = indicator && value;
+```
+
+### 4.4- OR Operator
+
+When using OR operator between diferent values, the result of evaluation will be the first truthy value from left to right. 
+
+In this example variable will be set to option_1 if its not falsy, in that case it will be set to option_2 value if its not falsy, and on until the last value.
+
+```javascript
+   let variable = option_1 || option_2 || option_3;
+```
 
 &nbsp;
 
