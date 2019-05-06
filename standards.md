@@ -268,19 +268,19 @@ Other useful methods for a _declarative_ approach.
 
 &nbsp;
 
-## 7- Estilo de código
+## 7- Code style
 
-### 7.1- Límite del largo de las lineas
+### 7.1- Line length limit
 
-El limite del largo de las lineas será entre 80 y 100 caracteres.
+Line length limit should be between 80 and 100 characters.
 
 ### 7.2- Requires
 
-El formato que utilizaremos para los **requires** será:
-* **const** para cada require.
-* Estarán separados en dos bloques:
-  * El primero contará con los requires correspondientes a dependencias externas.
-  * El segundo contará con los requires correspondientes a dependencias internas.
+The format we'll adopt for **requires** will be:
+* **const** for each require.
+* They will be separated in two blocks:
+  * The first one will refer to external dependencies.
+  * The second one will refer to internal dependencies.
 
 ```javascript
    const moment = require('moment');
