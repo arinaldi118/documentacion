@@ -9,8 +9,8 @@
      - [2.5- Serializers](#25--serializers)
      - [2.6- Interactors](#26--interactors)
      - [2.7- Middlewares](#27--middlewares)
-   - [3- Naming Convention](#3--naming-convention)
-     - [3.1- File name](#31--file-name)
+   - [3- Naming Conventions](#3--naming-conventions)
+     - [3.1- Files](#31--files)
      - [3.2- Input and output API parameters (Pending)](#32--input-and-output-api-parameters-pending)
      - [3.3- Routes (Pending)](#33--routes-pending)
      - [3.4- Database](#34--database)
@@ -20,9 +20,9 @@
      - [4.2- Ternary Operator](#42--ternary-operator)
      - [4.3- AND Operator](#43--and-operator)
      - [4.4- OR Operator](#44--or-operator)
-   - [5- API Rest](#5--api-rest)
+   - [5- Rest API](#5--rest-api)
      - [5.1- Best Practices](#51--best-practices)
-     - [5.2- Status Code ERRORs](#52--status-code-errors)
+     - [5.2- Response Status Codes](#52--response-status-codes)
    - [6- Functional Programming](#6--functional-programming)
      - [6.1- Introduction](#61--introduction)
      - [6.2- Map](#62--map)
@@ -30,7 +30,7 @@
      - [6.4- Filter](#64--filter)
      - [6.5- Others](#65--others)
    - [7- Code Style](#7--code-style)
-     - [7.1- Length Limit](#71--length-limit)
+     - [7.1- Line length limit](#71--line-length-limit)
      - [7.2- Requires](#7.2--requires)
      - [7.3- Destructuring](#7.3--destructuring)
      - [7.4- Implicit Return](#74--implicit-return)
@@ -105,11 +105,11 @@ Code is always **camelCase**.
 
 &nbsp;
 
-## 4- Conditional Statements
+## 4- Conditionals
 
 There are several Boolean contexts, to make the most of them we must use thuthy/falsy values. To know what they are you should read section 7.5.
 
-### 4.1 - IFs
+### 4.1- IFs
 
 Up to the possible extent, single statement `ifs` should be placed within the same line without using **{ }**.
 
@@ -204,7 +204,7 @@ Most commonly used are:
 
 Useful links will include more information about status codes.
 
-## 6- Functional
+## 6- Functional Programming
 
 To the extent to which it can be applied, use fuctional primitives as **Map, Reduce, Filter, etc.**.
 
