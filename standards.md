@@ -41,7 +41,7 @@
 
 ## 1- Objective
 
-The purpose of this document is to present the standards we use in Wolox to work with NodeJS.
+The purpose of this document is to present the standards we use in Wolox to work with NodeJS. 
 It's recommended to read Matias Pizzagalli's post whose link is in the section of useful links.
 
 &nbsp;
@@ -60,7 +60,7 @@ Our services are responsible for interacting with external services and database
 
 ### 2.3- Models
 
-The model should be as simple as possible, just fields and Sequelize configurations. We try to not putting logic here but it is permitted to do an specific model validation as password requirements for an user.
+The model should be as simple as possible, just fields and Sequelize configurations. We try to not put logic here but it is permitted to do some specific model validations such as user password validation.
 
 ### 2.4- Helpers
 
@@ -80,20 +80,17 @@ Abstraction layers set up before controllers usually, which allow us to perform 
 
 &nbsp;
 
-&nbsp;
-
 ## 3- Naming Conventions
 
 ### 3.1- Files
 
-File names must be **snake_case**, the entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. 
-Same thing goes to controllers, services, etc.
+File names must be **snake_case**, the entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. Same thing for to controllers, services, etc.
 
 ### 3.2- Input and output API parameters (Pending)
 
 Input and output API parameters will be in **snake_case**.
 
-### 3.3- Routes (Pendiente)
+### 3.3- Routes (Pending)
 
 Routes will be **snake_case**.
 
@@ -103,7 +100,7 @@ Tables and columns should all be **snake_case**.
 
 ### 3.5- Code
 
-Code should be **camelCase**.
+Code is always **camelCase**.
 
 &nbsp;
 
@@ -111,7 +108,7 @@ Code should be **camelCase**.
 
 ### 4.1 - IFs
 
-Up to the possible extent, single statement ifs should be placed within the same line without using **{ }**.
+Up to the possible extent, single statement `ifs` should be placed within the same line without using **{ }**.
 
 ```javascript
    if(!user) return next(errors.notFound('User not found');
@@ -142,9 +139,9 @@ instead of
         next(errors.notFound('User not found');
     };
 ```
-### 4.2- Ternary Operators
+### 4.2- Ternary Operator
 
-Cuando debemos asignar a una variable un determinado valor en base a una condición podemos utilizar el operador ternario de esta manera:
+When a value should be chosen using a binary condition it is useful to use the ternary operator. 
 
 ```javascript
    let variable = condition ? value_if_condition_is_true : value_if_condition_is_false;
@@ -288,8 +285,6 @@ The format we'll adopt for **requires** will be:
 
    const userService = require('../services/users');
    const userMapper = require('../mappers/users');
-
-   // Otro bloque con las demas constantes.
 
 ```
 
