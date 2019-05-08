@@ -34,6 +34,7 @@
      - [7.2- Requires](#7.2--requires)
      - [7.3- Destructuring](#7.3--destructuring)
      - [7.4- Implicit Return](#74--implicit-return)
+     - [7.5- Truthy and Falsy values](#75--truthy-and-falsy-values)
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
@@ -105,6 +106,8 @@ Code is always **camelCase**.
 &nbsp;
 
 ## 4- Conditional Statements
+
+There are several Boolean contexts, to make the most of them we must use thuthy/falsy values. To know what they are you should read section 7.5.
 
 ### 4.1 - IFs
 
@@ -305,6 +308,10 @@ A comprenhensive approach to destructuring may be found in the useful links sect
 When using _arrow functions_ we can make the **return statement implicit** meaning that the result of evaluating the expression right of the arrow will be returned as a value. This saves writing **{}** and **return**.  
 
 Yes, code will be shorter and neater but for more complex code, changing or debugging is noticeably more prone to errors. This is why, we enforce the use of the **implicit return** only in simple or short functions.
+
+### 7.5- Truthy and Falsy values
+
+In JavaScript, a truthy value is a value that translates to true when evaluated in a Boolean context. All values are truthy unless they are defined as falsy which are **false**, **0**, **""**, **null**, **undefined** and **NaN**.
 
 &nbsp;
 
