@@ -9,6 +9,7 @@
      - [2.5- Serializers](#25--serializers)
      - [2.6- Interactors](#26--interactors)
      - [2.7- Middlewares](#27--middlewares)
+     - [2.8- Mappers](#27- mappers)
    - [3- Convención de nombres](#3--convención-de-nombres)
      - [3.1- Nombre de archivos](#31--nombre-de-archivos)
      - [3.2- Parámetros de entrada y salida de API (Pendiente)](#32--parámetros-de-entrada-y-salida-de-api-pendiente)
@@ -78,6 +79,10 @@ Utilizado cuando el flujo del negocio es muy complejo o existen diferentes flujo
 ### 2.7- Middlewares
 
 Capas de abstracción, puesta antes de los controllers generalmente, que nos permiten realizar validaciones de distintos tipos, por ejemplo, validaciones de autenticación o validaciones de esquemas.
+
+### 2.8- Mappers
+
+Se utilizan para centralizar la lógica correspondiente a convertir los datos que nos llegan en los objetos que manejamos en nuestra aplicación. Como ventaja también tenemos la reutilización de los mismos en los diferentes puntos de entrada donde apliquen.
 
 &nbsp;
 
