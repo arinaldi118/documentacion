@@ -349,37 +349,37 @@ Siempre priorizar el uso de **promises**.
 Hay un caso especial donde conviene usar async/await. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Por ejemplo:
 
 ```javascript
-   if (order.state === CANCELLED) {
+  if (order.state === CANCELLED) {
     try {
       await deleteProduct(order.product);
     } catch (e) {
       ...
     }
-   }
+  }
  
-   return sendEmail({
+  return sendEmail({
     id: order.id,
     state: order.state
-   })
+  })
     .then(response => ...)
 ```
 
  Si dentro del if uso una promise, comenzaría a haber dos cadenas de promises dentro de la función, una dentro del if y otra afuera. Terminaría teniendo duplicada la cadena de promises.
 
 ```javascript
-   if (order.state === CANCELLED) {
+  if (order.state === CANCELLED) {
     return deleteProduct(order.product)
-     .then(() => sendEmail({
-       id: order.id,
-       state: order.state
-     }))
-     .then(response => ...)
-   }
+      .then(() => sendEmail({
+        id: order.id,
+        state: order.state
+      }))
+      .then(response => ...)
+  }
  
-   return sendEmail({
-     id: order.id,
-     state: order.state
-   })
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
     .then(response => ...)
 ```
 
