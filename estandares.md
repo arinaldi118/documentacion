@@ -332,8 +332,8 @@ Por lo tanto, solo se utlizará el **return implícito** en funciones sencillas.
 ### 8.1- Promise
 
 La _promise_ representa la finalización (o falla) eventual de una operación asíncrona y su valor resultante. Consta de dos métodos:
-* **then**: Este método es ejecutado si la promesa fue resuelta.
-* **catch**: Este método es ejecutado si la promesa fue rechazada.
+* **then**: Este método es ejecutado si la promise fue resuelta.
+* **catch**: Este método es ejecutado si la promise fue rechazada.
 
 Existen diversas formas de utilizar las promises, una buena guía se encuentra en el siguiente post de Maykol Purica, ver sección de links útiles.
 
