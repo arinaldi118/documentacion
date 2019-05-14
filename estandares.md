@@ -346,7 +346,7 @@ Agregar **async** delante de una función hace que esta devuelva siempre una pro
 ### 8.3- ¿Cuándo una y cuándo otra?
 
 Siempre priorizar el uso de **promises**.  
-Hay un caso especial donde conviene usar **async/await**. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Por ejemplo:
+Hay un caso especial donde conviene usar async/await. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Por ejemplo:
 
 ```javascript
    if (order.state === CANCELLED) {
