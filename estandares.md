@@ -355,16 +355,16 @@ Hay un caso especial donde conviene usar async/await. El mismo es cuando una pro
     } catch (e) {
       ...
     }
-  }
+   }
  
-  return sendEmail({
+   return sendEmail({
     id: order.id,
     state: order.state
-  })
-   .then(response => ...)
+   })
+    .then(response => ...)
 ```
 
- Si dentro del if uso una promise, comenzaría a haber dos cadenas de promises dentro de la función, una dentro del if y otra afuera. Terminaría teniendo duplicada la cadena de promises. Quedaría:
+ Si dentro del if uso una promise, comenzaría a haber dos cadenas de promises dentro de la función, una dentro del if y otra afuera. Terminaría teniendo duplicada la cadena de promises.
 
 ```javascript
    if (order.state === CANCELLED) {
@@ -374,7 +374,7 @@ Hay un caso especial donde conviene usar async/await. El mismo es cuando una pro
        state: order.state
      }))
      .then(response => ...)
-  }
+   }
  
    return sendEmail({
      id: order.id,
