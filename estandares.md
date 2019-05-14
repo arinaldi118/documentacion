@@ -398,7 +398,7 @@ Hay dos maneras de hacerlo. Las mismas son casi idénticas salvo por lo menciona
 ```
 ó
 ```javascript
-   return Promise.reject(notFound('User not found'));
+   return Promise.reject(errors.notFound('User not found'));
 ```
 
 Preferir el uso de **Promise.reject** cuando el error se lance dentro de una promise ya que es más Node-friendly.  
@@ -409,8 +409,9 @@ Ser uniforme con una opción para lograr la prolijidad del código.
 Se deberá utilizar un **catch** para handlear el error.
 
 En el caso que se quiera realizar la response del request con el error, se deberá ejecutar la _función de middleware de error_.
+
 ```javascript
-   return next(errors.errorCorrespondiente(descripcionCorrespondiente));
+   return next(errors.notFound('User not found'));
 ```
 
 Cuando a la función **next** se le pasa un parámetro, Express ya sabe que entonces debe ir a la función de middleware de error, sin importar las demás funciones que hay entre medio.
