@@ -414,7 +414,7 @@ En el caso que se quiera realizar la response del request con el error, se deber
    return next(errors.notFound('User not found'));
 ```
 
-Cuando a la función **next** se le pasa un parámetro, Express ya sabe que entonces debe ir a la función de middleware de error, sin importar las demás funciones que hay entre medio.
+Cuando a la función **next** se le pasa un parámetro, Express ya sabe que debe ir a la función de middleware de error, sin importar las demás funciones que haya entre medio.
 
 ## 10- Links Utiles
 
