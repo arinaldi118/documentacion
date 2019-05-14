@@ -39,7 +39,10 @@
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
      - [8.3- ¿Cuándo una y cuándo otra?](#83--cuándo-una-y-cuándo-otra)
-   - [9- Links Utiles](#9--links-utiles)
+   - [9- Manejo de errores](#9--manejo-de-errores)
+     - [9.1- Lanzamiento de errores](#91--lanzamiento-de-errores)
+     - [9.2- Captura de errores](#92--captura-de-errores)
+   - [10- Links Utiles](#10--links-utiles)
 
 ## 1- Objetivo
 
@@ -382,7 +385,37 @@ Hay un caso especial donde conviene usar **async/await**. El mismo es cuando una
 
 Notar que quedó repetida la cadena de promises. A medida que esta crezca el código duplicado será cada vez más grande.
 
-## 9- Links Utiles
+&nbsp;
+
+## 9- Manejo de errores
+
+### 9.1- Lanzamiento de errores
+
+Hay dos maneras de hacerlo. Las mismas son casi idénticas salvo por lo mencionado [acá](https://stackoverflow.com/questions/33445415/javascript-promises-reject-vs-throw).
+
+```javascript
+   throw errors.notFound('User not found');
+```
+ó
+```javascript
+   return Promise.reject(notFound('User not found'));
+```
+
+Preferir el uso de **Promise.reject** cuando el error se lance dentro de una promise ya que es más Node-friendly.
+Intentar de ser uniforme con una opción para lograr la prolijidad del código.
+
+### 9.2- Captura de errores
+
+Se deberá utilizar un **catch** para handlear el error.
+
+En el caso que se quiera realizar la response del request con el error, se deberá ejecutar la _función de middleware de error_ haciendo
+```javascript
+   return next(errors.errorCorrespondiente(descripcionCorrespondiente));
+```
+
+Cuando a la función **next** se le pasa un parámetro, Express ya sabe que entonces debe ir a la función de middleware de error, sin importar las demás funciones que hay entre medio.
+
+## 10- Links Utiles
 
 - [Developing Better Node.js Developers][MaPiP] Post de Matias Pizzagalli.
 - [Bootstrap][GEP] Post de Gonzalo Escandarani.
