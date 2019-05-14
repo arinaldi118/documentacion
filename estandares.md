@@ -358,8 +358,8 @@ Hay un caso especial donde conviene usar **async/await**. El mismo es cuando una
   }
  
   return sendEmail({
-    state: order.state,
-    product: order.product
+    id: order.id,
+    state: order.state
   })
    .then(response => ...)
 ```
@@ -370,15 +370,15 @@ Hay un caso especial donde conviene usar **async/await**. El mismo es cuando una
    if (order.state === CANCELLED) {
     return deleteProduct(order.product)
      .then(() => sendEmail({
-       state: order.state,
-       product: order.product
+       id: order.id,
+       state: order.state
      }))
      .then(response => ...)
   }
  
    return sendEmail({
-     state: order.state,
-     product: order.product
+     id: order.id,
+     state: order.state
    })
     .then(response => ...)
 ```
