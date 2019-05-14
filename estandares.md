@@ -408,7 +408,7 @@ Ser uniforme con una opción para lograr la prolijidad del código.
 
 Se deberá utilizar un **catch** para handlear el error.
 
-En el caso que se quiera realizar la response del request con el error, se deberá ejecutar la _función de middleware de error_ haciendo
+En el caso que se quiera realizar la response del request con el error, se deberá ejecutar la _función de middleware de error_.
 ```javascript
    return next(errors.errorCorrespondiente(descripcionCorrespondiente));
 ```
