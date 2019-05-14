@@ -402,7 +402,7 @@ Hay dos maneras de hacerlo. Las mismas son casi idénticas salvo por lo menciona
 ```
 
 Preferir el uso de **Promise.reject** cuando el error se lance dentro de una promise ya que es más Node-friendly.
-Intentar de ser uniforme con una opción para lograr la prolijidad del código.
+Ser uniforme con una opción para lograr la prolijidad del código.
 
 ### 9.2- Captura de errores
 
