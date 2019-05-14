@@ -38,6 +38,7 @@
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
+     - [8.3- ¿Cuándo una y cuándo otra?](#83--cuándo-una-y-cuándo-otra)
    - [9- Links Utiles](#9--links-utiles)
 
 ## 1- Objetivo
