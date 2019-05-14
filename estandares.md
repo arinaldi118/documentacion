@@ -121,7 +121,7 @@ En el caso de que no sea necesario loguear y solamente sea una línea lo que se 
    if(!user) return next(errors.notFound('User not found');
 ```
 
-Si la linea es afectada por el linter haciendo que sea mas de una linea se deberá hacer uso de **{ }**.
+Si la linea es afectada por el linter haciendo que sea más de una linea se deberá hacer uso de **{ }**.
 
 Asimismo, se debe elegir correctamente la condición del if y evitar el uso del else, por ejemplo pasar de esto:
 
@@ -338,6 +338,48 @@ Existen diversas formas de utilizar las promises, una buena guía se encuentra e
 Es una _syntactic sugar_ de las promises.
 Agregar **async** delante de una función hace que esta devuelva siempre una promise.
 **await** solamente puede ser usado dentro de una **async function**, esta espera hasta que la promise sea resuelta para continuar con la ejecución del codigo. Se la suele usar dentro de un bloque **try/catch**.
+
+### 8.3- ¿Cuándo una y cuándo otra?
+
+Siempre priorizar el uso de **promises**.
+Hay un caso especial donde conviene usar **async/await**. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Por ejemplo:
+
+```javascript
+   if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  return sendEmail({
+    state: order.state,
+    product: order.product
+  })
+   .then(response => ...)
+```
+
+ Si dentro del if uso una promise, comenzaría a haber dos cadenas de promises dentro de la función, una dentro del if y otra afuera. Terminaría teniendo duplicada la cadena de promises. Quedaría:
+
+```javascript
+   if (order.state === CANCELLED) {
+    return deleteProduct(order.product)
+     .then(() => sendEmail({
+       state: order.state,
+       product: order.product
+     }))
+     .then(response => ...)
+  }
+ 
+   return sendEmail({
+     state: order.state,
+     product: order.product
+   })
+    .then(response => ...)
+```
+
+Notar que quedó repetida la cadena de promises. A medida que esta crezca el código duplicado será cada vez más grande.
 
 ## 9- Links Utiles
 
