@@ -9,7 +9,7 @@
      - [2.5- Serializers](#25--serializers)
      - [2.6- Interactors](#26--interactors)
      - [2.7- Middlewares](#27--middlewares)
-     - [2.8- Mappers](#27- mappers)
+     - [2.8- Mappers](#28--mappers)
    - [3- Convención de nombres](#3--convención-de-nombres)
      - [3.1- Nombre de archivos](#31--nombre-de-archivos)
      - [3.2- Parámetros de entrada y salida de API (Pendiente)](#32--parámetros-de-entrada-y-salida-de-api-pendiente)
