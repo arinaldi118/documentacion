@@ -346,25 +346,7 @@ Agregar **async** delante de una función hace que esta devuelva siempre una pro
 ### 8.3- ¿Cuándo una y cuándo otra?
 
 Siempre priorizar el uso de **promises**.  
-Hay un caso especial donde conviene usar async/await. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Por ejemplo:
-
-```javascript
-  if (order.state === CANCELLED) {
-    try {
-      await deleteProduct(order.product);
-    } catch (e) {
-      ...
-    }
-  }
- 
-  return sendEmail({
-    id: order.id,
-    state: order.state
-  })
-    .then(response => ...)
-```
-
- Si dentro del if uso una promise, comenzaría a haber dos cadenas de promises dentro de la función, una dentro del if y otra afuera. Terminaría teniendo duplicada la cadena de promises.
+Hay un caso especial donde conviene usar async/await. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Usando promises tendríamos:
 
 ```javascript
   if (order.state === CANCELLED) {
@@ -383,7 +365,39 @@ Hay un caso especial donde conviene usar async/await. El mismo es cuando una pro
     .then(response => ...)
 ```
 
-Notar que quedó repetida la cadena de promises. A medida que esta crezca el código duplicado será cada vez más grande.
+Notar que quedó repetida la cadena de promises. A medida que esta crezca el código duplicado será cada vez más grande.  
+En cambio usando **async/await**:
+
+```javascript
+  if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+Cuando usamos este approach, dejamos todas las promises de la función con async/await para que el código sea uniforme.
+
+```javascript
+  if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  const response = await sendEmail({ id: order.id, state: order.state });
+  ...
+```
 
 &nbsp;
 
