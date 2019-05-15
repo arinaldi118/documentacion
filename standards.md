@@ -345,8 +345,63 @@ Specifying any function or arrow function as **async** specifies that the return
 **await** may only be used inside **async** functions. Using **await** makes the code flow block until the promise is _resolved_ or _rejected_.
 **await** statements are usually within **try/catch** blocks.
 
+### 8.3- When to use which?
 
-## 9- Useful Links
+Always prioritize the use of **promises**.  
+There is a special case where it is convenient to use async/await. Is when a promise is executed within an if and after that if the main flow of the function continues. Using promises we would have:
+
+```javascript
+  if (order.state === CANCELLED) {
+    return deleteProduct(order.product)
+      .then(() => sendEmail({
+        id: order.id,
+        state: order.state
+      }))
+      .then(response => ...)
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+Notice the promises chain was repeated. As it grows, the duplicate code will get bigger and bigger.  
+Instead, using **async/await**:
+
+```javascript
+  if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+When we use this approach, we code all the promises of the function with async/await so that the code is uniform.
+
+```javascript
+  if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  const response = await sendEmail({ id: order.id, state: order.state });
+  ...
+```
+
+## 10- Useful Links
 
 - [Developing Better Node.js Developers][MaPiP] Post by Matias Pizzagalli's post.
 - [Bootstrap][GEP] Post by Gonzalo Escandarani.
