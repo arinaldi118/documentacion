@@ -38,7 +38,7 @@
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
-     - [8.3- ¿Cuándo una y cuándo otra?](#83--cuándo-una-y-cuándo-otra)
+     - [8.3- ¿Cuándo usar cuál?](#83--cuándo-usar-cuál)
    - [9- Manejo de errores](#9--manejo-de-errores)
      - [9.1- Lanzamiento de errores](#91--lanzamiento-de-errores)
      - [9.2- Captura de errores](#92--captura-de-errores)
@@ -343,7 +343,7 @@ Es una _syntactic sugar_ de las promises.
 Agregar **async** delante de una función hace que esta devuelva siempre una promise.
 **await** solamente puede ser usado dentro de una **async function**, esta espera hasta que la promise sea resuelta para continuar con la ejecución del codigo. Se la suele usar dentro de un bloque **try/catch**.
 
-### 8.3- ¿Cuándo una y cuándo otra?
+### 8.3- ¿Cuándo usar cuál?
 
 Siempre priorizar el uso de **promises**.  
 Hay un caso especial donde conviene usar async/await. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Usando promises tendríamos:

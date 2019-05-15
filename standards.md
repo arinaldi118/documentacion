@@ -13,6 +13,7 @@
      - [2.5- Serializers](#25--serializers)
      - [2.6- Interactors](#26--interactors)
      - [2.7- Middlewares](#27--middlewares)
+     - [2.8- Mappers](#28--mappers)
    - [3- Naming Conventions](#3--naming-conventions)
      - [3.1- Files](#31--files)
      - [3.2- Input and output API parameters (Pending)](#32--input-and-output-api-parameters-pending)
@@ -42,6 +43,10 @@
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
+     - [8.3- When to use which?](#83--when-to-use-which)
+   - [9- Errors handling](#9--errors-handling)
+     - [9.1- Throwing errors](#91--throwing-errors)
+     - [9.2- Capturing errors](#92--capturing-errors)
    - [9- Useful Links](#9--useful-links)
 
 ## 1- Objective
