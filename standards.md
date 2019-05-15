@@ -401,6 +401,37 @@ When we use this approach, we code all the promises of the function with async/a
   ...
 ```
 
+&nbsp;
+
+## 9- Errors handling
+
+### 9.1- Throwing errors
+
+There are two ways of doing it. They are almost identical except for for what is mentioned [here](https://stackoverflow.com/questions/33445415/javascript-promises-reject-vs-throw).
+
+```javascript
+   throw errors.notFound('User not found');
+```
+ó
+```javascript
+   return Promise.reject(errors.notFound('User not found'));
+```
+
+Prefer the use of **Promise.reject** when the error is thrown within a promise as it is more Node-friendly.  
+Be uniform with an option to achieve the prolixity of the code.
+
+### 9.2- Capturing errors
+
+A **catch** has to be used to handle the error.
+
+In case you want to perform the response of the request with the error, you have to execute the _error middleware function_.
+
+```javascript
+   return next(errors.notFound('User not found'));
+```
+
+When a parameter is passed to the **next** function, Express already knows that it must go to the error middleware function, regardless of the other functions in between.
+
 ## 10- Useful Links
 
 - [Developing Better Node.js Developers][MaPiP] Post by Matias Pizzagalli's post.
