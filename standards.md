@@ -47,7 +47,7 @@
    - [9- Errors handling](#9--errors-handling)
      - [9.1- Throwing errors](#91--throwing-errors)
      - [9.2- Capturing errors](#92--capturing-errors)
-   - [9- Useful Links](#9--useful-links)
+   - [10- Useful Links](#10--useful-links)
 
 ## 1- Objective
 
@@ -87,6 +87,10 @@ Utilized when business flow is too complex or are many of them. For _complex_ bu
 ### 2.7- Middlewares
 
 Abstraction layers set up before controllers usually, which allow us to perform certain validation steps, for example, authentication or schema validations.
+
+### 2.8- Mappers
+
+They are used to centralize the corresponding logic of converting the data that arrive to us into the objects we handle in our application. As an advantage we also have the reuse of them at the different entry points where it applies.
 
 &nbsp;
 
