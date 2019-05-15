@@ -412,7 +412,7 @@ There are two ways of doing it. They are almost identical except for for what is
 ```javascript
    throw errors.notFound('User not found');
 ```
-ó
+or
 ```javascript
    return Promise.reject(errors.notFound('User not found'));
 ```
