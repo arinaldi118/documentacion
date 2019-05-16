@@ -44,7 +44,7 @@
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
      - [8.3- When to use which?](#83--when-to-use-which)
-   - [9- Errors handling](#9--errors-handling)
+   - [9- Error handling](#9--error-handling)
      - [9.1- Throwing errors](#91--throwing-errors)
      - [9.2- Capturing errors](#92--capturing-errors)
    - [10- Useful Links](#10--useful-links)
@@ -90,7 +90,7 @@ Abstraction layers set up before controllers usually, which allow us to perform 
 
 ### 2.8- Mappers
 
-They are used to centralize the corresponding logic of converting the data that arrive to us into the objects we handle in our application. As an advantage we also have the reuse of them at the different entry points where it applies.
+They are used to centralize the corresponding logic of converting the data that arrives to us into the objects we handle in our application. As an advantage we also have the reuse of them at the different entry points where it applies.
 
 &nbsp;
 
@@ -348,7 +348,8 @@ Specifying any function or arrow function as **async** specifies that the return
 ### 8.3- When to use which?
 
 Always prioritize the use of **promises**.  
-There is a special case where it is convenient to use async/await. Is when a promise is executed within an if and after that if the main flow of the function continues. Using promises we would have:
+A convenient case for using async/await is when a promise is executed conditionally without altering main flow. 
+Using promises we would have:
 
 ```javascript
   if (order.state === CANCELLED) {
@@ -386,7 +387,7 @@ Instead, using **async/await**:
     .then(response => ...)
 ```
 
-When we use this approach, we code all the promises of the function with async/await so that the code is uniform.
+When using this approach, we await all of the promises so the code is uniform.
 
 ```javascript
   if (order.state === CANCELLED) {
@@ -407,7 +408,7 @@ When we use this approach, we code all the promises of the function with async/a
 
 ### 9.1- Throwing errors
 
-There are two ways of doing it. They are almost identical except for for what is mentioned [here](https://stackoverflow.com/questions/33445415/javascript-promises-reject-vs-throw).
+There are two ways of doing it. They are almost identical except for what is mentioned [here](https://stackoverflow.com/questions/33445415/javascript-promises-reject-vs-throw).
 
 ```javascript
    throw errors.notFound('User not found');
@@ -417,7 +418,7 @@ or
    return Promise.reject(errors.notFound('User not found'));
 ```
 
-Prefer the use of **Promise.reject** when the error is thrown within a promise as it is more Node-friendly.  
+When throwing errors within promises we must return the exception using **Promise.reject**.  
 Be uniform with an option to achieve the prolixity of the code.
 
 ### 9.2- Capturing errors
@@ -429,7 +430,6 @@ In case you want to perform the response of the request with the error, you have
 ```javascript
    return next(errors.notFound('User not found'));
 ```
-
 When a parameter is passed to the **next** function, Express already knows that it must go to the error middleware function, regardless of the other functions in between.
 
 ## 10- Useful Links
