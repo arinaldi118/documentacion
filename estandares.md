@@ -387,16 +387,16 @@ En cambio usando **async/await**:
 Cuando usamos este approach, dejamos todas las promises de la función con async/await para que el código sea uniforme.
 
 ```javascript
-  if (order.state === CANCELLED) {
-    try {
+  try {
+    if (order.state === CANCELLED) {
       await deleteProduct(order.product);
-    } catch (e) {
-      ...
     }
-  }
  
-  const response = await sendEmail({ id: order.id, state: order.state });
-  ...
+    const response = await sendEmail({ id: order.id, state: order.state });
+    ...
+  } catch (e) {
+    ...
+  }
 ```
 
 &nbsp;

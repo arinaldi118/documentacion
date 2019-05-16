@@ -390,16 +390,16 @@ Instead, using **async/await**:
 When using this approach, we await all of the promises so the code is uniform.
 
 ```javascript
-  if (order.state === CANCELLED) {
-    try {
+  try {
+    if (order.state === CANCELLED) {
       await deleteProduct(order.product);
-    } catch (e) {
-      ...
     }
-  }
  
-  const response = await sendEmail({ id: order.id, state: order.state });
-  ...
+    const response = await sendEmail({ id: order.id, state: order.state });
+    ...
+  } catch (e) {
+    ...
+  }
 ```
 
 &nbsp;
