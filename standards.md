@@ -13,6 +13,7 @@
      - [2.5- Serializers](#25--serializers)
      - [2.6- Interactors](#26--interactors)
      - [2.7- Middlewares](#27--middlewares)
+     - [2.8- Mappers](#28--mappers)
    - [3- Naming Conventions](#3--naming-conventions)
      - [3.1- Files](#31--files)
      - [3.2- Input and output API parameters (Pending)](#32--input-and-output-api-parameters-pending)
@@ -42,7 +43,11 @@
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
-   - [9- Useful Links](#9--useful-links)
+     - [8.3- When to use which?](#83--when-to-use-which)
+   - [9- Error handling](#9--error-handling)
+     - [9.1- Throwing errors](#91--throwing-errors)
+     - [9.2- Capturing errors](#92--capturing-errors)
+   - [10- Useful Links](#10--useful-links)
 
 ## 1- Objective
 
@@ -82,6 +87,10 @@ Utilized when business flow is too complex or are many of them. For _complex_ bu
 ### 2.7- Middlewares
 
 Abstraction layers set up before controllers usually, which allow us to perform certain validation steps, for example, authentication or schema validations.
+
+### 2.8- Mappers
+
+They are used to centralize the corresponding logic of converting the data that arrives to us into the objects we handle in our application. As an advantage we also have the reuse of them at the different entry points where it applies.
 
 &nbsp;
 
@@ -336,8 +345,94 @@ Specifying any function or arrow function as **async** specifies that the return
 **await** may only be used inside **async** functions. Using **await** makes the code flow block until the promise is _resolved_ or _rejected_.
 **await** statements are usually within **try/catch** blocks.
 
+### 8.3- When to use which?
 
-## 9- Useful Links
+Always prioritize the use of **promises**.  
+A convenient case for using async/await is when a promise is executed conditionally without altering main flow. 
+Using promises we would have:
+
+```javascript
+  if (order.state === CANCELLED) {
+    return deleteProduct(order.product)
+      .then(() => sendEmail({
+        id: order.id,
+        state: order.state
+      }))
+      .then(response => ...)
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+Notice the promises chain was repeated. As it grows, the duplicate code will get bigger and bigger.  
+Instead, using **async/await**:
+
+```javascript
+  if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+When using this approach, we await all of the promises so the code is uniform.
+
+```javascript
+  try {
+    if (order.state === CANCELLED) {
+      await deleteProduct(order.product);
+    }
+ 
+    const response = await sendEmail({ id: order.id, state: order.state });
+    ...
+  } catch (e) {
+    ...
+  }
+```
+
+&nbsp;
+
+## 9- Errors handling
+
+### 9.1- Throwing errors
+
+There are two ways of doing it. They are almost identical except for what is mentioned [here](https://stackoverflow.com/questions/33445415/javascript-promises-reject-vs-throw).
+
+```javascript
+   throw errors.notFound('User not found');
+```
+or
+```javascript
+   return Promise.reject(errors.notFound('User not found'));
+```
+
+When throwing errors within promises we must return the exception using **Promise.reject**.  
+Be uniform with an option to achieve the prolixity of the code.
+
+### 9.2- Capturing errors
+
+A **catch** has to be used to handle the error.
+
+In case you want to perform the response of the request with the error, you have to execute the _error middleware function_.
+
+```javascript
+   return next(errors.notFound('User not found'));
+```
+When a parameter is passed to the **next** function, Express already knows that it must go to the error middleware function, regardless of the other functions in between.
+
+## 10- Useful Links
 
 - [Developing Better Node.js Developers][MaPiP] Post by Matias Pizzagalli's post.
 - [Bootstrap][GEP] Post by Gonzalo Escandarani.

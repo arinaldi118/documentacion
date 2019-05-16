@@ -9,6 +9,7 @@
      - [2.5- Serializers](#25--serializers)
      - [2.6- Interactors](#26--interactors)
      - [2.7- Middlewares](#27--middlewares)
+     - [2.8- Mappers](#28--mappers)
    - [3- Convención de nombres](#3--convención-de-nombres)
      - [3.1- Nombre de archivos](#31--nombre-de-archivos)
      - [3.2- Parámetros de entrada y salida de API (Pendiente)](#32--parámetros-de-entrada-y-salida-de-api-pendiente)
@@ -37,7 +38,11 @@
    - [8- Promise vs Async/Await](#8--promise-vs-asyncawait)
      - [8.1- Promise](#81--promise)
      - [8.2- Async/Await](#82--async/await)
-   - [9- Links Utiles](#9--links-utiles)
+     - [8.3- ¿Cuándo usar cuál?](#83--cuándo-usar-cuál)
+   - [9- Manejo de errores](#9--manejo-de-errores)
+     - [9.1- Lanzamiento de errores](#91--lanzamiento-de-errores)
+     - [9.2- Captura de errores](#92--captura-de-errores)
+   - [10- Links Utiles](#10--links-utiles)
 
 ## 1- Objetivo
 
@@ -79,6 +84,10 @@ Utilizado cuando el flujo del negocio es muy complejo o existen diferentes flujo
 
 Capas de abstracción, puesta antes de los controllers generalmente, que nos permiten realizar validaciones de distintos tipos, por ejemplo, validaciones de autenticación o validaciones de esquemas.
 
+### 2.8- Mappers
+
+Se utilizan para centralizar la lógica correspondiente a convertir los datos que nos llegan en los objetos que manejamos en nuestra aplicación. Como ventaja también tenemos la reutilización de los mismos en los diferentes puntos de entrada donde apliquen.
+
 &nbsp;
 
 ## 3- Convención de nombres
@@ -116,7 +125,7 @@ En el caso de que no sea necesario loguear y solamente sea una línea lo que se 
    if(!user) return next(errors.notFound('User not found');
 ```
 
-Si la linea es afectada por el linter haciendo que sea mas de una linea se deberá hacer uso de **{ }**.
+Si la linea es afectada por el linter haciendo que sea más de una linea se deberá hacer uso de **{ }**.
 
 Asimismo, se debe elegir correctamente la condición del if y evitar el uso del else, por ejemplo pasar de esto:
 
@@ -323,8 +332,8 @@ Por lo tanto, solo se utlizará el **return implícito** en funciones sencillas.
 ### 8.1- Promise
 
 La _promise_ representa la finalización (o falla) eventual de una operación asíncrona y su valor resultante. Consta de dos métodos:
-* **then**: Este método es ejecutado si la promesa fue resuelta.
-* **catch**: Este método es ejecutado si la promesa fue rechazada.
+* **then**: Este método es ejecutado si la promise fue resuelta.
+* **catch**: Este método es ejecutado si la promise fue rechazada.
 
 Existen diversas formas de utilizar las promises, una buena guía se encuentra en el siguiente post de Maykol Purica, ver sección de links útiles.
 
@@ -334,7 +343,93 @@ Es una _syntactic sugar_ de las promises.
 Agregar **async** delante de una función hace que esta devuelva siempre una promise.
 **await** solamente puede ser usado dentro de una **async function**, esta espera hasta que la promise sea resuelta para continuar con la ejecución del codigo. Se la suele usar dentro de un bloque **try/catch**.
 
-## 9- Links Utiles
+### 8.3- ¿Cuándo usar cuál?
+
+Siempre priorizar el uso de **promises**.  
+Hay un caso especial donde conviene usar async/await. El mismo es cuando una promise se ejecuta dentro de un if y luego de ese if se continúa con el flujo principal de la función. Usando promises tendríamos:
+
+```javascript
+  if (order.state === CANCELLED) {
+    return deleteProduct(order.product)
+      .then(() => sendEmail({
+        id: order.id,
+        state: order.state
+      }))
+      .then(response => ...)
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+Notar que quedó repetida la cadena de promises. A medida que esta crezca el código duplicado será cada vez más grande.  
+En cambio usando **async/await**:
+
+```javascript
+  if (order.state === CANCELLED) {
+    try {
+      await deleteProduct(order.product);
+    } catch (e) {
+      ...
+    }
+  }
+ 
+  return sendEmail({
+    id: order.id,
+    state: order.state
+  })
+    .then(response => ...)
+```
+
+Cuando usamos este approach, dejamos todas las promises de la función con async/await para que el código sea uniforme.
+
+```javascript
+  try {
+    if (order.state === CANCELLED) {
+      await deleteProduct(order.product);
+    }
+ 
+    const response = await sendEmail({ id: order.id, state: order.state });
+    ...
+  } catch (e) {
+    ...
+  }
+```
+
+&nbsp;
+
+## 9- Manejo de errores
+
+### 9.1- Lanzamiento de errores
+
+Hay dos maneras de hacerlo. Las mismas son casi idénticas salvo por lo mencionado [acá](https://stackoverflow.com/questions/33445415/javascript-promises-reject-vs-throw).
+
+```javascript
+   throw errors.notFound('User not found');
+```
+ó
+```javascript
+   return Promise.reject(errors.notFound('User not found'));
+```
+
+Preferir el uso de **Promise.reject** cuando el error se lance dentro de una promise ya que es más Node-friendly.  
+Ser uniforme con una opción para lograr la prolijidad del código.
+
+### 9.2- Captura de errores
+
+Se deberá utilizar un **catch** para handlear el error.
+
+En el caso que se quiera realizar la response del request con el error, se deberá ejecutar la _función de middleware de error_.
+
+```javascript
+   return next(errors.notFound('User not found'));
+```
+Cuando a la función **next** se le pasa un parámetro, Express ya sabe que debe ir a la función de middleware de error, sin importar las demás funciones que haya entre medio.
+
+## 10- Links Utiles
 
 - [Developing Better Node.js Developers][MaPiP] Post de Matias Pizzagalli.
 - [Bootstrap][GEP] Post de Gonzalo Escandarani.
