@@ -1,4 +1,4 @@
-# Standars and good practices
+# Standards and best practices
 
 <h1 align="center">
   <img src="assets/images/banner.png" alt="Node.js Best Practices">
@@ -98,7 +98,7 @@ They are used to centralize the corresponding logic of converting the data that 
 
 ### 3.1- Files
 
-File names must be **snake_case** and **plural** except models, which will be in singular. The entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. Same thing for to controllers, services, etc.
+File names must be **snake_case** and **plural** except models, which will be in **singular**. The entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. Same thing for to controllers, services, etc.
 
 ### 3.2- Input and output API parameters (Pending)
 
