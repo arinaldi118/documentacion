@@ -89,7 +89,7 @@ Abstraction layers set up before controllers usually, which allow us to perform 
 
 ### 3.1- Files
 
-File names must be **snake_case**, the entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. Same thing for to controllers, services, etc.
+File names must be **snake_case** and **plural** except models, which will be in singular. The entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. Same thing for to controllers, services, etc.
 
 ### 3.2- Input and output API parameters (Pending)
 
