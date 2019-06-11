@@ -42,7 +42,8 @@
    - [9- Manejo de errores](#9--manejo-de-errores)
      - [9.1- Lanzamiento de errores](#91--lanzamiento-de-errores)
      - [9.2- Captura de errores](#92--captura-de-errores)
-   - [10- Links Utiles](#10--links-utiles)
+   - [10- Utilidades](#10--utilidades)
+   - [11- Links Utiles](#11--links-utiles)
 
 ## 1- Objetivo
 
@@ -53,7 +54,7 @@ Se recomienda leer el post de Matias Pizzagalli cuyo link se encuentra en la sec
 
 ## 2- Estructura de APP
 
-La estructura que se usará incluyen, como mínimo, estas carpetas: (models e interactors si son necesarias para la API). Para mayor información se encuentra el post de Gonzalo Escandarani en la sección de links útiles.
+La estructura que se usará incluyen, como mínimo, estas carpetas: (models e interactors si son necesarias para la API). De esta manera, podemos separar en distintas funcionalidades y responsabilidades. Para mayor información se encuentra el post de Gonzalo Escandarani en la sección de links útiles.
 
 ### 2.1- Controllers
 
@@ -92,6 +93,8 @@ Se utilizan para centralizar la lógica correspondiente a convertir los datos qu
 
 ## 3- Convención de nombres
 
+En este punto, definiremos una convencion para los distintos casos. La mayoria estan hechos para respetar el estandar http o el estandar de las bases de datos.
+
 ### 3.1- Nombre de archivos
 
 Los nombres de los archivos deben ir en **snake_case**, no se debe repetir la entidad en el nombre del archivo, por ejemplo si tenemos el modelo user, el archivo deberá llamarse **user.js** en lugar de **user.model.js** o de **user_model.js**. 
@@ -111,7 +114,7 @@ El nombre de las tablas y de las columnas serán en **snake_case**.
 
 ### 3.5- Resto del código
 
-Para el resto de código se usará **camelCase**.
+Para el resto de código se usará **camelCase** por default. Esta fue una decisión de la mayoría de los desarrolladores, quedando en libertad de cada equipo cambiar al case que mas le convenga, siendo consistente entre todas las apis que se encuentren en el proyecto.
 
 &nbsp;
 
@@ -160,9 +163,36 @@ Cuando debemos asignar a una variable un determinado valor en base a una condici
    let variable = condicion ? valor_si_condicion_es_verdadera : valor_si_condicion_es_falsa;
 ```
 
+Este operador es conveniente cuando la condicion no es dada directamente por un truthy o falsy value o cuando queremos asignar valores distintos de _undefined_.
+
+Ejemplos:
+
+```javascript
+  const age = 26;
+  const beverage = age >= 21 ? 'Beer' : 'Juice';
+  console.log(beverage); // "Beer"
+
+  const isStudent = true;
+  const price = isStudent ? 8 : 12;
+  console.log(price); // 8
+```
+
+En cambio, cuando tenemos estos casos es conveniente usar el operador **AND** o el operador **OR**.
+
+```javascript
+  let myObj;
+  let value = myObj ? myObj.myKey : undefined; // Aqui conviene usar el operador AND.
+
+  let myVar1;
+  let myVar2;
+  let myVar3 = 'myVar';
+  let value = myVar1 ? myVar1 : myVar2 ? myVar2 : myVar3 ? myVar3 : undefined; // Aqui conviene el operador OR
+
+```
+
 ### 4.3- Operador AND
 
-Una manera de evitarnos la utilización del operador ternario es con el uso del operador **AND**.
+Una manera de evitarnos la utilización del operador ternario es con el uso del operador **AND**. Este operador es conveniente cuando la condicion es dada directamente por un truthy o falsy value. 
 
 ```javascript
    let variable = indicator && value;
@@ -170,14 +200,52 @@ Una manera de evitarnos la utilización del operador ternario es con el uso del 
    /* Variable tomara el valor de value si indicator es verdadero. Si el valor de indicator es 0, false, Nan, null, undefined entonces variable tendra el valor de indicator.*/
 ```
 
+Ejemplo:
+
+```javascript
+let myObj;
+
+let value = myObj && myObj.myKey;
+console.log(value) //undefined porque myObj es un falsy value, entonces asigna este valor.
+
+myObj = {};
+let value = myObj && myObj.myKey;
+console.log(value) //undefined porque myObj es un truthy value, entonces asigna el valor de myObj.myKey el cual es undefined.
+
+myObj.myKey = myValue;
+let value = myObj && myObj.myKey;
+console.log(value) //myValue porque myObj es un truthy value, entonces asigna el valor de myObj.myKey el cual es myValue.
+```
+
 ### 4.4- Operador OR
 
-Cuando debemos asignar a una variable un valor entre distintas posibilidades dependiendo de si son o no _null_ o _undefined_ podemos usar el operador **OR**. Por ejemplo:
+Cuando debemos asignar a una variable un valor entre distintas posibilidades dependiendo de si son _truthy_ o _falsy_ podemos usar el operador **OR**. Este operador es conveniente cuando el valor a asignar depende directamente de su valor booleano asociado.
 
 ```javascript
    let variable = opcion_1 || opcion_2 || opcion_3;
     
    /* Variable tomara el valor de opcion_1 al menos que sea null o undefined, en ese caso tomara el valor de opcion_2, pero si este tambien es null o undefined tomara el valor de opcion_3 independientemente de su valor.*/
+```
+
+Ejemplo:
+
+```javascript
+  let foo, bar, baz;
+  const name = foo || bar || baz || 'Sunshine';
+  console.log(name); // Sunshine porque foo, bar y baz son undefined.
+```
+
+Este ejemplo se podria escribir con `if/else` y observamos que es mucho mas largo.
+
+```javascript
+  let foo, bar, baz, name;
+
+  if (foo) name = foo;
+  else if (bar) name = bar;
+  else if (baz) name = baz;
+  else name = 'Sunshine';
+
+  console.log(name); // Sunshine porque foo, bar y baz son undefined.
 ```
 
 &nbsp;
@@ -429,7 +497,16 @@ En el caso que se quiera realizar la response del request con el error, se deber
 ```
 Cuando a la función **next** se le pasa un parámetro, Express ya sabe que debe ir a la función de middleware de error, sin importar las demás funciones que haya entre medio.
 
-## 10- Links Utiles
+## 10- Utilidades
+
+En esta seccion dejaremos unos cuantos **packages** que nos ayudaran a resolver muchos de nuestros problemas.
+
+* **[LODASH][lodash]**: Una moderna biblioteca de utilidades de JavaScript que ofrece modularidad, rendimiento y extras.
+* **[LODASH FP][lodash-fp]**: Lodash orientado a la programacion funcional.
+* **[RAMBDA][rambda]**: Libreria orientada a la programacion funcional.
+* **[MOMENT][moment]**: Analice, valide, manipule y muestre fechas y horas en JavaScript.
+
+## 11- Links Utiles
 
 - [Developing Better Node.js Developers][MaPiP] Post de Matias Pizzagalli.
 - [Bootstrap][GEP] Post de Gonzalo Escandarani.
@@ -444,3 +521,8 @@ Cuando a la función **next** se le pasa un parámetro, Express ya sabe que debe
    [MaPuP]: <https://medium.com/wolox-driving-innovation/how-to-code-better-async-javascript-e59363883c84>
    [destructuring]: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment>
    [statusCodes]: <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status>
+
+   [lodash]: <https://lodash.com/>
+   [lodash-fp]: <https://github.com/lodash/lodash/wiki/FP-Guide>
+   [rambda]: <https://ramdajs.com/>
+   [moment]: <https://momentjs.com/>

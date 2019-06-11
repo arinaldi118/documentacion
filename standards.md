@@ -47,7 +47,8 @@
    - [9- Error handling](#9--error-handling)
      - [9.1- Throwing errors](#91--throwing-errors)
      - [9.2- Capturing errors](#92--capturing-errors)
-   - [10- Useful Links](#10--useful-links)
+   - [10- Utils](#10--utils)
+   - [11- Useful Links](#11--useful-links)
 
 ## 1- Objective
 
@@ -95,6 +96,8 @@ They are used to centralize the corresponding logic of converting the data that 
 &nbsp;
 
 ## 3- Naming Conventions
+
+We will define a convention for the different cases. Most are made to respect the **HTTP** and **DATABASE** standards.
 
 ### 3.1- Files
 
@@ -163,6 +166,31 @@ When a value should be chosen using a binary condition it is useful to use the t
    let variable = condition ? value_if_condition_is_true : value_if_condition_is_false;
 ```
 
+This operator is convenient when the condition is not given directly by a Truthy or falsy value or when we want to assign values other than _undefined_.
+
+```javascript
+  const age = 26;
+  const beverage = age >= 21 ? 'Beer' : 'Juice';
+  console.log(beverage); // "Beer"
+
+  const isStudent = true;
+  const price = isStudent ? 8 : 12;
+  console.log(price); // 8
+```
+
+Instead, when we have these cases it is convenient to use the **AND** operator or the **OR** operator.
+
+```javascript
+  let myObj;
+  let value = myObj ? myObj.myKey : undefined; // Here you should use the AND operator.
+
+  let myVar1;
+  let myVar2;
+  let myVar3 = 'myVar';
+  let value = myVar1 ? myVar1 : myVar2 ? myVar2 : myVar3 ? myVar3 : undefined; // Here you should use the OR operator.
+
+```
+
 ### 4.3- AND Operator
 
 A simple way to avoid the ternary operator is using the **AND** operator. 
@@ -173,6 +201,23 @@ In the following example variable will be set to value if indicator is truthy, i
    let variable = indicator && value;
 ```
 
+Examples:
+
+```javascript
+let myObj;
+
+let value = myObj && myObj.myKey;
+console.log(value) //undefined because myObj is a falsy value.
+
+myObj = {};
+let value = myObj && myObj.myKey;
+console.log(value) //undefined because myObj is a truthy value, then the value of myObj.mykey is assigned which is undefined.
+
+myObj.myKey = myValue;
+let value = myObj && myObj.myKey;
+console.log(value) //myValue because myObj is a truthy value, then the value of myObj.mykey is assigned which is myValue.
+```
+
 ### 4.4- OR Operator
 
 When using OR operator between diferent values, the result of evaluation will be the first truthy value from left to right. 
@@ -181,6 +226,27 @@ In this example variable will be set to option_1 if its not falsy, in that case 
 
 ```javascript
    let variable = option_1 || option_2 || option_3;
+```
+
+Example:
+
+```javascript
+  let foo, bar, baz;
+  const name = foo || bar || baz || 'Sunshine';
+  console.log(name); // Sunshine because foo, bar and baz are undefined.
+```
+
+This example could be written with `if/else` and we note that it is much longer.
+
+```javascript
+  let foo, bar, baz, name;
+
+  if (foo) name = foo;
+  else if (bar) name = bar;
+  else if (baz) name = baz;
+  else name = 'Sunshine';
+
+  console.log(name); // Sunshine because foo, bar and baz are undefined.
 ```
 
 &nbsp;
@@ -432,7 +498,16 @@ In case you want to perform the response of the request with the error, you have
 ```
 When a parameter is passed to the **next** function, Express already knows that it must go to the error middleware function, regardless of the other functions in between.
 
-## 10- Useful Links
+## 10- Utils
+
+In this section we will leave a few **packages** that will help us solve many of our problems.
+
+* **[LODASH][lodash]**: A modern JavaScript utility library delivering modularity, performance & extras.
+* **[LODASH FP][lodash-fp]**: Lodash oriented to functional programming.
+* **[RAMBDA][rambda]**: A practical functional library for JavaScript programmers.
+* **[MOMENT][moment]**: Parse, validate, manipulate, and display dates and times in JavaScript.
+
+## 11- Useful Links
 
 - [Developing Better Node.js Developers][MaPiP] Post by Matias Pizzagalli's post.
 - [Bootstrap][GEP] Post by Gonzalo Escandarani.
