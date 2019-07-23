@@ -100,11 +100,11 @@ En este punto, definiremos una convencion para los distintos casos. La mayoria e
 Los nombres de los archivos deben ir en **snake_case**, no se debe repetir la entidad en el nombre del archivo, por ejemplo si tenemos el modelo user, el archivo deberá llamarse **user.js** en lugar de **user.model.js** o de **user_model.js**. 
 Lo mismo para controllers, services, etc.
 
-### 3.2- Parámetros de entrada y salida de API (Pendiente)
+### 3.2- Parámetros de entrada y salida de API
 
-Los parámetros de entrada / salida de una api sera en **snake_case**.
+Los parámetros de entrada / salida de una api serán en **camelCase**.
 
-### 3.3- Rutas (Pendiente)
+### 3.3- Rutas
 
 Las rutas serán en **snake_case**.
 

@@ -103,11 +103,11 @@ We will define a convention for the different cases. Most are made to respect th
 
 File names must be **snake_case** and **plural** except models, which will be in **singular**. The entity of the file must not be repeated, for example if we have the model user, the file should be named **user.js** instead of **user.model.js** or **user_model.js**. Same thing for to controllers, services, etc.
 
-### 3.2- Input and output API parameters (Pending)
+### 3.2- Input and output API parameters
 
-Input and output API parameters will be in **snake_case**.
+Input and output API parameters will be in **camelCase**.
 
-### 3.3- Routes (Pending)
+### 3.3- Routes
 
 Routes will be **snake_case**.
 
